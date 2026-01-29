@@ -1,0 +1,219 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+/* Page */
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #231012, #0f0607);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ead9b6;
+  overflow: hidden;
+}
+
+/* Molecular canvas */
+#moleculeCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+}
+
+/* Waves */
+.wave-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+.wave {
+  position: absolute;
+  width: 200%;
+  height: 55%;
+  left: -50%;
+  bottom: -30%;
+  border-radius: 100%;
+  filter: blur(2px);
+}
+
+.wave1 {
+  background: radial-gradient(circle, #3a1418, #120607);
+  opacity: 0.22;
+  animation: waveMove 26s linear infinite;
+}
+
+.wave2 {
+  background: radial-gradient(circle, #2a0f12, #0f0607);
+  opacity: 0.15;
+  animation: waveMoveReverse 36s linear infinite;
+}
+
+.wave3 {
+  background: radial-gradient(circle, #4a1b1f, #1a0809);
+  opacity: 0.1;
+  animation: waveMove 46s linear infinite;
+}
+
+@keyframes waveMove {
+  to { transform: translateX(25%); }
+}
+
+@keyframes waveMoveReverse {
+  to { transform: translateX(-25%); }
+}
+
+/* Instruction */
+.instruction {
+  margin-bottom: 22px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* 3D Scene */
+.scene {
+  perspective: 1600px;
+}
+
+/* =========================
+   CARD (RESPONSIVE + SAFE)
+   ========================= */
+.card {
+  width: min(420px, 92vw);
+  aspect-ratio: 420 / 260;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+  cursor: pointer;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Card faces */
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 22px 45px rgba(0,0,0,0.75);
+}
+
+/* =========================
+   SHIMMER (FRONT + BACK)
+   ========================= */
+.card-front::after,
+.card-back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255, 235, 200, 0.22),
+    transparent 60%
+  );
+  transform: translateX(-130%);
+  animation: shimmer 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Softer shimmer on image side */
+.card-front::after {
+  opacity: 0.55;
+}
+
+/* Slightly stronger shimmer on designed back */
+.card-back::after {
+  opacity: 0.9;
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-130%); }
+  50%  { transform: translateX(130%); }
+  100% { transform: translateX(130%); }
+}
+
+/* FORCE GOLD COLOR FOR ALL LINKS INSIDE CARD */
+.card a {
+  color: #ead9b6 !important;
+  text-decoration: none;
+}
+
+.card a:visited,
+.card a:active,
+.card a:focus {
+  color: #ead9b6 !important;
+  text-decoration: none;
+}
+
+/* Front */
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Back */
+.card-back {
+  background: linear-gradient(135deg, #4f1c20, #612327, #47171b);
+  padding: 20px 22px;
+  text-align: center;
+  transform: rotateY(180deg);
+}
+
+/* Top info */
+.back-top {
+  font-size: 0.7rem;
+  margin-bottom: 18px;
+}
+
+/* Icons */
+.icons-center {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 14px;
+}
+
+.icons-center a {
+  font-size: 20px;
+}
+
+/* Dividers */
+.divider {
+  height: 1px;
+  background: rgba(234,217,182,0.45);
+  margin: 8px 0;
+}
+
+.divider.small {
+  width: 62%;
+  margin: 14px auto 18px;
+}
+
+/* Focus */
+.focus-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.focus-text {
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+/* Minimal mobile tweak */
+@media (max-width: 420px) {
+  .focus-text {
+    font-size: 0.68rem;
+  }
+}
